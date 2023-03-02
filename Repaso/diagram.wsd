@@ -1,0 +1,128 @@
+@startuml UML
+
+class Sedes {
+    * id
+    --
+    * nombre
+    * descripcion
+}
+
+class Socios {
+    * id
+    --
+    * nro_documento
+    * nombre
+    * apellido
+    *id_tipo_de_documento
+}
+
+class TiposDeDocumento {
+    * id
+    --
+    * nombre
+    * descripcion
+}
+
+class Clases {
+    * id
+    --
+    * nombre
+    * horario
+    * max_capacidad
+    * id_sede
+    * id_coordinador
+}
+
+class Coordinador {
+    * id
+    --
+    * nombre
+    * apellido
+}
+
+class Planes {
+    * id
+    --
+    * fecha_inicio
+    * fecha_fin
+    * id_socio
+    * id_estado_de_plan
+    * id_tipo_de_plan
+}
+
+class EstadosDePlanes {
+    * id
+    --
+    * nombre
+    * descripcion
+}
+
+class TiposDePlanes {
+    * id
+    --
+    * nombre
+    * descripcion
+}
+
+class Sesiones {
+    * id
+    --
+    * nombre
+    * descripcion
+    * id_plan
+}
+
+class Ejercicios {
+    * id
+    --
+    * nombre
+    * descripcion
+    * repeticiones
+    * series
+    * notas
+    * id_sesion
+}
+
+class Reservas {
+    * id
+    --
+    * nombre
+    * descripcion
+    * id_socio
+    * id_clase
+}
+
+class Progresos {
+    * id
+    --
+    * peso_logrado
+    * repeticiones_logradas
+    * series_logradas
+    * observaciones
+    * id_ejercicio
+}
+
+class Asistencias {
+    * id
+    --
+    * asistencia
+    * id_clase
+    * id_reserva
+}
+
+
+Sedes }|..|{ Clases
+Socios }o..|| TiposDeDocumento
+Socios ||..|{ Planes
+Planes }o..|| TiposDePlanes
+Planes }o..|| EstadosDePlanes
+Planes }o..|{ Sesiones
+Sesiones }o..|{ Ejercicios
+Clases }o..|| Coordinador
+Clases ||..o{ Asistencias
+Socios ||..|{ Reservas
+Reservas }o..|| Clases
+Ejercicios ||..|| Progresos
+Reservas ||..|| Asistencias
+
+@enduml
