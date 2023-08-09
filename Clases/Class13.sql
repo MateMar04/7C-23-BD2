@@ -38,7 +38,34 @@ DELETE
 FROM film
 WHERE film_id = 1;
 /* No se puede eliminar la pelicula ya que tiene claves foraneas que dependen del id de la clave primaria
-   de la pelicula */
+   de la pelicula.
+   El codigo necesario para poder borrar una film es el siguiente: */
+START TRANSACTION;
+
+DELETE
+FROM film_actor
+WHERE film_id = 1;
+
+DELETE
+FROM film_category
+WHERE film_id = 1;
+
+DELETE
+FROM rental
+WHERE inventory_id IN (SELECT inventory_id FROM inventory WHERE film_id = 1)
+
+DELETE
+FROM inventory
+WHERE film_id = 1;
+
+DELETE
+FROM film
+WHERE film_id = 1;
+
+ROLLBACK; 
+/* El rolback esta puesto para poder probar que funcione sin que se borre la informacion.
+Para que se borre hay que remplazarlo por COMMIT; */ 
+
 
 
 INSERT INTO rental (rental_date, inventory_id, customer_id, return_date, staff_id)
